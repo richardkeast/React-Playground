@@ -76,12 +76,26 @@ var Board = React.createClass({
     {
         return {
             notes: [
-                {id: 0, note: "Note 1"},
-                {id: 1, note: "Note 2"},
-                {id: 2, note: "Note 3"},
-                {id: 3, note: "Note 4"}
             ]
         }
+    },
+
+    nextId()
+    {
+        this.uniqueId = this.uniqueId || 0;
+        return this.uniqueId++;
+    },
+
+    add(text){
+        var notes = [
+            ...this.state.notes,
+            {
+                id: this.nextId(),
+                note: text
+            }
+        ]
+
+        this.setState(({notes}));
     },
 
     update(newText, id) {
@@ -118,6 +132,7 @@ var Board = React.createClass({
         return (
         <div className="board">
             {this.state.notes.map(this.eachNote)}
+            <button onClick={() => this.add()}>+</button>
         </div>)
     }
 });
