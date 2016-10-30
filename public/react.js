@@ -137,4 +137,4 @@ var Board = React.createClass({
     }
 });
 
-ReactDOM.render(<Board count={10} />, document.getElementById('react-container'));
+ReactDOM.render(<Board count={0} />, document.getElementById('react-container'));
