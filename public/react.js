@@ -12,13 +12,13 @@ var Note = React.createClass (
 
     save()
     {
-        var val = this.refs.newText.value;
+        this.props.onChange(this.refs.newText.value, this.props.id);
         this.setState({editing: false});
     },
 
     remove()
     {
-        alert("Removing Note");
+        this.props.onRemove(this.props.id);
     },
 
     renderForm()
@@ -75,23 +75,49 @@ var Board = React.createClass({
     getInitialState()
     {
         return {
-            notes: 
-            [
-                "Call Bob",
-                "Email Sarah",
-                "Eat Lunch",
-                "Finish Proposal"
+            notes: [
+                {id: 0, note: "Note 1"},
+                {id: 1, note: "Note 2"},
+                {id: 2, note: "Note 3"},
+                {id: 3, note: "Note 4"}
             ]
         }
+    },
+
+    update(newText, id) {
+        var notes = this.state.notes.map(
+            note => (note.id !== id) ?
+                note :
+                    {
+                      ...note,
+                      note: newText
+                    }
+        )
+        
+        this.setState({notes});
+    },
+
+
+    remove(id)
+    {
+        var notes = this.state.notes.filter(note => note.id !== id)
+        this.setState({notes});
+    },
+
+    eachNote(note)
+    {
+        return (<Note key={note.id} 
+                      id={note.id}
+                      onChange={this.update}
+                      onRemove={this.remove}>
+                    {note.note}</Note>)
     },
 
     render()
     {
         return (
         <div className="board">
-            {this.state.notes.map((note, i) => {
-                return <Note key={i}>{note}</Note>
-            })}
+            {this.state.notes.map(this.eachNote)}
         </div>)
     }
 });
