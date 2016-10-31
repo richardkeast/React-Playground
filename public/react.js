@@ -5,6 +5,20 @@ var Note = React.createClass (
         return {editing: false};
     },
 
+    componentDidUpdate()
+    {
+        if (this.state.editing)
+        {
+            this.refs.newText.focus();
+            this.refs.newText.select();
+        }
+    },
+
+    shouldComponentUpdate(nextProps, nextState)
+    {
+        return this.props.children != nextProps.children || this.state != nextState;
+    },
+
     edit()
     {
         this.setState({editing: true});
