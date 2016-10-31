@@ -25,7 +25,7 @@ var Note = React.createClass (
     {
         return (
             <div className="note">
-                <textarea ref="newText"></textarea>
+                <textarea defaultValue={this.props.children} ref="newText"></textarea>
                 <button onClick={this.save}>SAVE</button>
             </div>
         )
@@ -86,7 +86,8 @@ var Board = React.createClass({
         return this.uniqueId++;
     },
 
-    add(text){
+    add(text)
+    {
         var notes = [
             ...this.state.notes,
             {
